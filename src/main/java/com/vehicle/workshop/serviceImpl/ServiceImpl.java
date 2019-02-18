@@ -5,7 +5,9 @@ import com.vehicle.workshop.repo.ServiceRepository;
 import com.vehicle.workshop.serviceI.ServiceI;
 import com.vehicle.workshop.utils.YanResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ServiceImpl implements ServiceI {
 
     @Autowired
