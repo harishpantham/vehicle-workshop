@@ -26,4 +26,24 @@ public class Service extends BaseEntity {
     @OneToMany(mappedBy = "service", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Parts> partsList = new ArrayList<>();
 
+    public void addLabourWork(LabourWork labourWork) {
+        labourWorkList.add(labourWork);
+        labourWork.setService(this);
+    }
+
+    public void removeLabourWork(LabourWork labourWork) {
+        labourWork.setService(null);
+        this.labourWorkList.remove(labourWork);
+    }
+
+    public void addParts(Parts parts) {
+        partsList.add(parts);
+        parts.setService(this);
+    }
+
+    public void removeParts(Parts parts) {
+        parts.setService(null);
+        this.partsList.remove(parts);
+    }
+
 }

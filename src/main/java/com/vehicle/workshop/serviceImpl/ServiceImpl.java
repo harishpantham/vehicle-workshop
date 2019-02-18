@@ -1,10 +1,15 @@
 package com.vehicle.workshop.serviceImpl;
 
 import com.vehicle.workshop.dto.ServiceDTO;
+import com.vehicle.workshop.repo.ServiceRepository;
 import com.vehicle.workshop.serviceI.ServiceI;
 import com.vehicle.workshop.utils.YanResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class ServiceImpl implements ServiceI {
+
+    @Autowired
+    ServiceRepository serviceRepository;
 
     @Override
     public YanResponse getAllServices() {

@@ -21,4 +21,12 @@ public class LabourWork extends BaseEntity {
     public void setWorkStatus(String workStatus) {
         this.workStatus = workStatus;
     }
+
+    public Service getService() {
+        return service;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
+    }
 }

@@ -226,4 +226,12 @@ public class Parts extends BaseEntity {
     public void setActive(Boolean active) {
         isActive = active;
     }
+
+    public Service getService() {
+        return service;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
+    }
 }

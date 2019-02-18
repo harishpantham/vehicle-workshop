@@ -47,6 +47,8 @@ public class PartsDTO extends BaseEntityDTO {
 
     private Boolean isActive;
 
+    private Long serviceId;
+
     public PartCategory getPartCategory() {
         return partCategory;
     }
@@ -213,5 +215,13 @@ public class PartsDTO extends BaseEntityDTO {
 
     public void setActive(Boolean active) {
         isActive = active;
+    }
+
+    public Long getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(Long serviceId) {
+        this.serviceId = serviceId;
     }
 }
