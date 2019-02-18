@@ -3,10 +3,7 @@ package com.vehicle.workshop.model;
 import com.vehicle.workshop.enums.PartCategory;
 import com.vehicle.workshop.enums.TaxTypeEnum;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -57,6 +54,10 @@ public class Parts extends BaseEntity {
     private Long currentStock;
 
     private Boolean isActive = Boolean.FALSE;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "service_id")
+    private Service service;
 
     public PartCategory getPartCategory() {
         return partCategory;
