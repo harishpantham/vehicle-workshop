@@ -19,13 +19,13 @@ public class EmployeeController {
     }
 
     @PostMapping("/employees")
-    public YanResponse saveEmployees(@RequestBody EmployeeDTO partsDTO) throws Exception {
-        return employeeServiceI.saveEmployees(partsDTO);
+    public YanResponse saveEmployees(@RequestBody EmployeeDTO employeeDTO) throws Exception {
+        return employeeServiceI.saveEmployees(employeeDTO);
     }
 
     @PutMapping("/employees")
-    public YanResponse updateEmployees(@RequestBody EmployeeDTO partsDTO) throws Exception {
-        return employeeServiceI.updateEmployees(partsDTO);
+    public YanResponse updateEmployees(@RequestBody EmployeeDTO employeeDTO) throws Exception {
+        return employeeServiceI.updateEmployees(employeeDTO);
     }
 
     @DeleteMapping("/employees/{employeeId}")

@@ -117,6 +117,35 @@ public class PartsServiceImpl implements PartsServiceI {
 
     }
 
+    @Override
+    public YanResponse updateParts(PartsDTO partsDTO) {
+        YanResponse yanResponse = new YanResponse();
+        if (partsDTO != null) {
+            if (!StringUtils.isEmpty(partsDTO.getId()) && partsDTO.getId() > 0) {
+                Optional<Parts> optionalParts = partsRepository.findById(partsDTO.getId());
+                if (optionalParts.isPresent()) {
+                    Parts parts = optionalParts.get();
+                    parts = mapDtoToEntity(partsDTO, parts);
+                    partsRepository.save(parts);
+                    yanResponse.setStatus(HttpStatus.OK.value());
+                    yanResponse.setMessage(messageService.getMessage("part.update"));
+                } else {
+                    yanResponse.setStatus(HttpStatus.NOT_FOUND.value());
+                    yanResponse.setMessage(messageService.getMessage("part.not.found"));
+                }
+            }
+        } else {
+            yanResponse.setMessage(messageService.getMessage("invalid.data"));
+            yanResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+        }
+        return yanResponse;
+    }
+
+    @Override
+    public YanResponse deleteParts(Long partId) {
+        return null;
+    }
+
     private Parts mapDtoToEntity(PartsDTO partsDTO, Parts parts) {
         if (!StringUtils.isEmpty(partsDTO.getId())) {
             parts.setId(partsDTO.getId());
@@ -196,34 +225,5 @@ public class PartsServiceImpl implements PartsServiceI {
 
 
         return parts;
-    }
-
-    @Override
-    public YanResponse updateParts(PartsDTO partsDTO) {
-        YanResponse yanResponse = new YanResponse();
-        if (partsDTO != null) {
-            if (!StringUtils.isEmpty(partsDTO.getId()) && partsDTO.getId() > 0) {
-                Optional<Parts> optionalParts = partsRepository.findById(partsDTO.getId());
-                if (optionalParts.isPresent()) {
-                    Parts parts = optionalParts.get();
-                    parts = mapDtoToEntity(partsDTO, parts);
-                    partsRepository.save(parts);
-                    yanResponse.setStatus(HttpStatus.OK.value());
-                    yanResponse.setMessage(messageService.getMessage("part.update"));
-                } else {
-                    yanResponse.setStatus(HttpStatus.NOT_FOUND.value());
-                    yanResponse.setMessage(messageService.getMessage("part.not.found"));
-                }
-            }
-        } else {
-            yanResponse.setMessage(messageService.getMessage("invalid.data"));
-            yanResponse.setStatus(HttpStatus.BAD_REQUEST.value());
-        }
-        return yanResponse;
-    }
-
-    @Override
-    public YanResponse deleteParts(Long partId) {
-        return null;
     }
 }

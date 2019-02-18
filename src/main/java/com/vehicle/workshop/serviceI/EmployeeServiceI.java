@@ -1,14 +1,14 @@
 package com.vehicle.workshop.serviceI;
 
-import com.vehicle.workshop.utils.YanResponse;
 import com.vehicle.workshop.dto.EmployeeDTO;
+import com.vehicle.workshop.utils.YanResponse;
 
 public interface EmployeeServiceI {
     YanResponse getAllEmployees();
 
-    YanResponse saveEmployees(EmployeeDTO partsDTO);
+    YanResponse saveEmployees(EmployeeDTO employeeDTO);
 
-    YanResponse updateEmployees(EmployeeDTO partsDTO);
+    YanResponse updateEmployees(EmployeeDTO employeeDTO);
 
     YanResponse deleteEmployees(Long employeeId);
 
