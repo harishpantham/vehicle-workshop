@@ -42,39 +42,6 @@ public class PartsServiceImpl implements PartsServiceI {
         return yanResponse;
     }
 
-    private List<PartsDTO> getPartsToDtoMapping(List<Parts> partsList) {
-        List<PartsDTO> partsDTOList = new ArrayList<>();
-        if (!ObjectUtils.isEmpty(partsDTOList)) {
-            for (Parts parts : partsList) {
-                PartsDTO partsDTO = new PartsDTO();
-                partsDTO.setId(parts.getId());
-                partsDTO.setPartCategory(parts.getPartCategory());
-                partsDTO.setPartGroup(parts.getPartGroup());
-                partsDTO.setPartMaker(parts.getPartMaker());
-                partsDTO.setOtherMakersName(parts.getOtherMakersName());
-                partsDTO.setName(parts.getName());
-                partsDTO.setUOM(parts.getUOM());
-                partsDTO.setHSNCode(parts.getHSNCode());
-                partsDTO.setPacking(parts.getPacking());
-                partsDTO.setTaxTypeEnum(parts.getTaxTypeEnum());
-                partsDTO.setTaxPercentage(parts.getTaxPercentage());
-                partsDTO.setSurChargePercentage(parts.getSurChargePercentage());
-                partsDTO.setMrp(parts.getMrp());
-                partsDTO.setSaleRate(parts.getSaleRate());
-                partsDTO.setPurchaseRate(parts.getPurchaseRate());
-                partsDTO.setItemExpiryDays(parts.getItemExpiryDays());
-                partsDTO.setMaxOrderLevel(parts.getMaxOrderLevel());
-                partsDTO.setMinOrderLevel(parts.getMinOrderLevel());
-                partsDTO.setRemarks(parts.getRemarks());
-                partsDTO.setCurrentStock(parts.getCurrentStock());
-                partsDTO.setActive(parts.getActive());
-                partsDTO.setCreatedOn(Helper.getLongFromTimestamp(parts.getCreatedOn()));
-                partsDTOList.add(partsDTO);
-            }
-        }
-        return partsDTOList;
-    }
-
     @Override
     public YanResponse getPartsById(Long partId) {
         YanResponse yanResponse = new YanResponse();
@@ -101,7 +68,7 @@ public class PartsServiceImpl implements PartsServiceI {
         YanResponse yanResponse = new YanResponse();
         if (partsDTO != null) {
             if (!StringUtils.isEmpty(partsDTO.getId()) && partsDTO.getId() > 0) {
-                updateParts(partsDTO);
+                return updateParts(partsDTO);
             } else {
                 Parts parts = new Parts();
                 parts = mapDtoToEntity(partsDTO, parts);
@@ -144,6 +111,39 @@ public class PartsServiceImpl implements PartsServiceI {
     @Override
     public YanResponse deleteParts(Long partId) {
         return null;
+    }
+
+    private List<PartsDTO> getPartsToDtoMapping(List<Parts> partsList) {
+        List<PartsDTO> partsDTOList = new ArrayList<>();
+        if (!ObjectUtils.isEmpty(partsDTOList)) {
+            for (Parts parts : partsList) {
+                PartsDTO partsDTO = new PartsDTO();
+                partsDTO.setId(parts.getId());
+                partsDTO.setPartCategory(parts.getPartCategory());
+                partsDTO.setPartGroup(parts.getPartGroup());
+                partsDTO.setPartMaker(parts.getPartMaker());
+                partsDTO.setOtherMakersName(parts.getOtherMakersName());
+                partsDTO.setName(parts.getName());
+                partsDTO.setUOM(parts.getUOM());
+                partsDTO.setHSNCode(parts.getHSNCode());
+                partsDTO.setPacking(parts.getPacking());
+                partsDTO.setTaxTypeEnum(parts.getTaxTypeEnum());
+                partsDTO.setTaxPercentage(parts.getTaxPercentage());
+                partsDTO.setSurChargePercentage(parts.getSurChargePercentage());
+                partsDTO.setMrp(parts.getMrp());
+                partsDTO.setSaleRate(parts.getSaleRate());
+                partsDTO.setPurchaseRate(parts.getPurchaseRate());
+                partsDTO.setItemExpiryDays(parts.getItemExpiryDays());
+                partsDTO.setMaxOrderLevel(parts.getMaxOrderLevel());
+                partsDTO.setMinOrderLevel(parts.getMinOrderLevel());
+                partsDTO.setRemarks(parts.getRemarks());
+                partsDTO.setCurrentStock(parts.getCurrentStock());
+                partsDTO.setActive(parts.getActive());
+                partsDTO.setCreatedOn(Helper.getLongFromTimestamp(parts.getCreatedOn()));
+                partsDTOList.add(partsDTO);
+            }
+        }
+        return partsDTOList;
     }
 
     private Parts mapDtoToEntity(PartsDTO partsDTO, Parts parts) {
@@ -222,8 +222,6 @@ public class PartsServiceImpl implements PartsServiceI {
         if (!StringUtils.isEmpty(partsDTO.getActive())) {
             parts.setActive(partsDTO.getActive());
         }
-
-
         return parts;
     }
 }

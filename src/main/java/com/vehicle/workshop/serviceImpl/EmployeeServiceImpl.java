@@ -83,6 +83,7 @@ public class EmployeeServiceImpl implements EmployeeServiceI {
             employeeDTO.setEmail(employee.getEmail());
             employeeDTO.setEmployeeStatusEnum(employee.getEmployeeStatusEnum());
             employeeDTO.setFranchiseId(employee.getFranchiseId());
+            employeeDTO.setCreatedOn(Helper.getLongFromTimestamp(employee.getCreatedOn()));
             employeeDTOList.add(employeeDTO);
         }
         return employeeDTOList;
@@ -93,7 +94,7 @@ public class EmployeeServiceImpl implements EmployeeServiceI {
         YanResponse yanResponse = new YanResponse();
         if (employeeDTO != null) {
             if (!StringUtils.isEmpty(employeeDTO.getId()) && employeeDTO.getId() > 0) {
-                updateEmployees(employeeDTO);
+                return updateEmployees(employeeDTO);
             } else {
                 Employee employee = new Employee();
                 employee = mapDtoToEntity(employeeDTO, employee);
