@@ -60,6 +60,9 @@ public class PartsServiceImpl implements PartsServiceI {
                 yanResponse.setMessage(messageService.getMessage("part.no"));
                 yanResponse.setStatus(HttpStatus.OK.value());
             }
+        } else {
+            yanResponse.setMessage(messageService.getMessage("invalid.data"));
+            yanResponse.setStatus(HttpStatus.BAD_REQUEST.value());
         }
         return yanResponse;
     }

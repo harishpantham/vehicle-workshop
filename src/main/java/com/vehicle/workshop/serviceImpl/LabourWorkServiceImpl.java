@@ -116,7 +116,11 @@ public class LabourWorkServiceImpl implements LabourWorkServiceI {
         for (LabourWork labourWork : labourWorkList) {
             LabourWorkDTO labourWorkDTO = new LabourWorkDTO();
             labourWorkDTO.setId(labourWork.getId());
-            labourWorkDTO.setWorkStatus(labourWork.getWorkStatus());
+            labourWorkDTO.setName(labourWork.getName());
+            labourWorkDTO.setTimeInMinutes(labourWork.getTimeInMinutes());
+            labourWorkDTO.setCost(labourWork.getCost());
+            labourWorkDTO.setTaxRate(labourWork.getTaxRate());
+            labourWorkDTO.setDescription(labourWork.getDescription());
             labourWorkDTO.setCreatedOn(Helper.getLongFromTimestamp(labourWork.getCreatedOn()));
             labourWorkDTOList.add(labourWorkDTO);
         }
@@ -127,8 +131,20 @@ public class LabourWorkServiceImpl implements LabourWorkServiceI {
         if (!StringUtils.isEmpty(labourWorkDTO.getId())) {
             labourWork.setId(labourWorkDTO.getId());
         }
-        if (!StringUtils.isEmpty(labourWorkDTO.getWorkStatus())) {
-            labourWork.setWorkStatus(labourWorkDTO.getWorkStatus());
+        if (!StringUtils.isEmpty(labourWorkDTO.getName())) {
+            labourWork.setName(labourWorkDTO.getName());
+        }
+        if (!StringUtils.isEmpty(labourWorkDTO.getCode())) {
+            labourWork.setCode(labourWorkDTO.getCode());
+        }
+        if (!StringUtils.isEmpty(labourWorkDTO.getCost())) {
+            labourWork.setCost(labourWorkDTO.getCost());
+        }
+        if (!StringUtils.isEmpty(labourWorkDTO.getTaxRate())) {
+            labourWork.setTaxRate(labourWorkDTO.getTaxRate());
+        }
+        if (!StringUtils.isEmpty(labourWorkDTO.getDescription())) {
+            labourWork.setDescription(labourWorkDTO.getDescription());
         }
         return labourWork;
     }

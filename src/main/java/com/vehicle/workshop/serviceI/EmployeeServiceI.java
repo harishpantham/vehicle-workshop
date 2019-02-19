@@ -4,6 +4,7 @@ import com.vehicle.workshop.dto.EmployeeDTO;
 import com.vehicle.workshop.utils.YanResponse;
 
 public interface EmployeeServiceI {
+
     YanResponse getAllEmployees();
 
     YanResponse saveEmployees(EmployeeDTO employeeDTO);
