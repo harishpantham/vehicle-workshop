@@ -1,0 +1,317 @@
+@RestController
+public class UserController {
+	
+	@Autowired
+	UserServiceI userServiceI;
+
+	@GetMapping("/users")
+	public YanResponse getAllUsers() {
+		// TODO Auto-generated method stub
+		return userServiceI.getAllUsers();
+	}
+
+	@GetMapping("/users/{userId}")
+	public YanResponse getUserById(@PathVariable Long userId) {
+		// TODO Auto-generated method stub
+		return userServiceI.getUserById(userId);
+	}
+
+	@PostMapping("/users")
+	public YanResponse saveUser(@RequestBody AppUserDTO appUserDTO) {
+		// TODO Auto-generated method stub
+		return userServiceI.saveUser(appUserDTO);
+	}
+
+	@PutMapping("/users/{userId}")
+	public YanResponse updateUser(@RequestBody AppUserDTO appUserDTO) {
+		// TODO Auto-generated method stub
+		return userServiceI.updateUser(appUserDTO);
+	}
+
+	@DeleteMapping("/users/{userId}")
+	public YanResponse deleteUser(@PathVariable Long userId) {
+		// TODO Auto-generated method stub
+		return userServiceI.deleteUser(userId);
+	}
+
+}
+
+public class AppUserDTO {
+	
+
+	
+	Long id;
+	String userId;
+	String password;
+	String role;
+	String franchiseId;
+	boolean isActive;
+	Integer invalidLoginAttempts;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
+	public String getFranchiseId() {
+		return franchiseId;
+	}
+	public void setFranchiseId(String franchiseId) {
+		this.franchiseId = franchiseId;
+	}
+	public boolean isActive() {
+		return isActive;
+	}
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+	public Integer getInvalidLoginAttempts() {
+		return invalidLoginAttempts;
+	}
+	public void setInvalidLoginAttempts(Integer invalidLoginAttempts) {
+		this.invalidLoginAttempts = invalidLoginAttempts;
+	}
+	}
+  
+  
+  public class AppUser {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	Long id;
+	String userId;
+	String password;
+	String role;
+	String franchiseId;
+	boolean isActive;
+	Integer invalidLoginAttempts;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
+	public String getFranchiseId() {
+		return franchiseId;
+	}
+	public void setFranchiseId(String franchiseId) {
+		this.franchiseId = franchiseId;
+	}
+	public boolean isActive() {
+		return isActive;
+	}
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+	public Integer getInvalidLoginAttempts() {
+		return invalidLoginAttempts;
+	}
+	public void setInvalidLoginAttempts(Integer invalidLoginAttempts) {
+		this.invalidLoginAttempts = invalidLoginAttempts;
+	}
+	}
+
+
+public interface UserServiceI {
+	
+	YanResponse getAllUsers();
+	YanResponse getUserById(Long id);
+	YanResponse saveUser(AppUserDTO appUserDTO);
+	YanResponse updateUser(AppUserDTO appUserDTO);
+	YanResponse deleteUser(Long id);
+	
+}
+
+public interface UserRepository extends JpaRepository<AppUser, Long>{
+
+}
+
+public class UserServiceImpl implements UserServiceI  {
+	
+	@Autowired
+	UserRepository userRepository;
+	
+	@Autowired
+    Messages messageService;
+
+	@Override
+	public YanResponse getAllUsers() {
+		
+		List<AppUser> userList = userRepository.findAll();
+        YanResponse yanResponse = new YanResponse();
+        if (!StringUtils.isEmpty(userList) && userList.size() > 0) {
+            List<AppUserDTO> userDTOList = getAppUserToDtoMapping(userList);
+            yanResponse.setMessage(messageService.getMessage("success.message"));
+            yanResponse.setStatus(HttpStatus.OK.value());
+            yanResponse.setPayLoad(userDTOList);
+            return yanResponse;
+        } else {
+            yanResponse.setMessage(messageService.getMessage("appuser.no"));
+            yanResponse.setStatus(HttpStatus.OK.value());
+            return yanResponse;
+        }
+	}
+
+	private List<AppUserDTO> getAppUserToDtoMapping(List<AppUser> userList) {
+		// TODO Auto-generated method stub
+		
+		List<AppUserDTO> userDTOList = new ArrayList<>();
+		for(AppUser user : userList) {
+			
+			AppUserDTO appUserDTO = new AppUserDTO();
+			appUserDTO.setId(user.getId());
+			appUserDTO.setUserId(user.getUserId());
+			appUserDTO.setPassword(user.getPassword());
+			appUserDTO.setRole(user.getRole());
+			appUserDTO.setFranchiseId(user.getFranchiseId());
+			appUserDTO.setActive(user.isActive());
+			appUserDTO.setInvalidLoginAttempts(user.getInvalidLoginAttempts());
+			userDTOList.add(appUserDTO);
+		}
+		return userDTOList;
+	}
+
+	@Override
+	public YanResponse getUserById(Long id) {
+		
+		YanResponse yanResponse = new YanResponse();
+        if (StringUtils.isEmpty(id) && id > 0) {
+            Optional<AppUser> optionalPart = userRepository.findById(id);
+            if (optionalPart.isPresent()) {
+                List<AppUser> userList = new ArrayList<>();
+                AppUser user = optionalPart.get();
+                userList.add(user);
+                List<AppUserDTO> userDTOList = getAppUserToDtoMapping(userList);
+                yanResponse.setMessage(messageService.getMessage("success.message"));
+                yanResponse.setStatus(HttpStatus.OK.value());
+                yanResponse.setPayLoad(userDTOList);
+            } else {
+                yanResponse.setMessage(messageService.getMessage("appuser.no"));
+                yanResponse.setStatus(HttpStatus.OK.value());
+            }
+        }
+        return yanResponse;
+	}
+
+	@Override
+	public YanResponse saveUser(AppUserDTO appUserDTO) {
+		
+		YanResponse yanResponse = new YanResponse();
+        if (appUserDTO != null) {
+            if (!StringUtils.isEmpty(appUserDTO.getId()) && appUserDTO.getId() > 0) {
+                return updateUser(appUserDTO);
+            } else {
+                AppUser user = new AppUser();
+                user = mapDtoToEntity(appUserDTO, user);
+                userRepository.save(user);
+                yanResponse.setStatus(HttpStatus.OK.value());
+                yanResponse.setMessage(messageService.getMessage("appuser.save"));
+            }
+        } else {
+            yanResponse.setMessage(messageService.getMessage("invalid.data"));
+            yanResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+        }
+        return yanResponse;
+	}
+
+	private AppUser mapDtoToEntity(AppUserDTO appUserDTO, AppUser user) {
+
+		if (!StringUtils.isEmpty(appUserDTO.getId())) {
+			user.setId(appUserDTO.getId());
+		}
+		if (!StringUtils.isEmpty(appUserDTO.getUserId())) {
+			user.setUserId(appUserDTO.getUserId());
+		}
+		if (!StringUtils.isEmpty(appUserDTO.getPassword())) {
+			user.setPassword(appUserDTO.getPassword());
+		}
+		if (!StringUtils.isEmpty(appUserDTO.getRole())) {
+			user.setRole(appUserDTO.getRole());
+		}
+		if (!StringUtils.isEmpty(appUserDTO.getFranchiseId())) {
+			user.setFranchiseId(appUserDTO.getFranchiseId());
+		}
+		if (!StringUtils.isEmpty(appUserDTO.isActive())) {
+			user.setActive(appUserDTO.isActive());
+		}
+		if (!StringUtils.isEmpty(appUserDTO.getInvalidLoginAttempts())) {
+			user.setInvalidLoginAttempts(appUserDTO.getInvalidLoginAttempts());
+		}
+		
+		return user;
+	}
+
+	@Override
+	public YanResponse updateUser(AppUserDTO appUserDTO) {
+        
+		YanResponse yanResponse = new YanResponse();
+        if (appUserDTO != null) {
+            if (!StringUtils.isEmpty(appUserDTO.getId()) && appUserDTO.getId() > 0) {
+                Optional<AppUser> optionalAppUser = userRepository.findById(appUserDTO.getId());
+                if (optionalAppUser.isPresent()) {
+                    AppUser user = optionalAppUser.get();
+                    user = mapDtoToEntity(appUserDTO, user);
+                    userRepository.save(user);
+                    yanResponse.setStatus(HttpStatus.OK.value());
+                    yanResponse.setMessage(messageService.getMessage("appuser.update"));
+                } else {
+                    yanResponse.setStatus(HttpStatus.NOT_FOUND.value());
+                    yanResponse.setMessage(messageService.getMessage("appuser.not.found"));
+                }
+            }
+        } else {
+            yanResponse.setMessage(messageService.getMessage("invalid.data"));
+            yanResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+        }
+        return yanResponse;
+	}
+
+	@Override
+	public YanResponse deleteUser(Long id) {
+		
+		YanResponse yanResponse = new YanResponse();
+		userRepository.deleteById(id);
+	    yanResponse.setMessage(messageService.getMessage("appuser.update"));
+	    
+	    return yanResponse;
+		
+	}
+	
+	
+}
