@@ -1,0 +1,486 @@
+public class CustomerController  {
+
+	@Autowired
+	CustomerServiceImpl customerServiceI;
+	
+	@GetMapping("/customers")
+	public YanResponse getAllCustomers() {
+		return customerServiceI.getAllCustomers();
+	}
+
+	@GetMapping("/customers/{customerId}")
+	public YanResponse getCustomerById(@PathVariable Long customerId) {
+		return customerServiceI.getCustomerById(customerId);
+	}
+
+	@PostMapping("/customers")
+	public YanResponse saveCustomers(@RequestBody CustomerDTO customerDTO) {
+		return customerServiceI.saveCustomers(customerDTO);
+	}
+
+	@PutMapping("/customers")
+	public YanResponse updateCustomers(@RequestBody CustomerDTO customerDTO) {
+		return customerServiceI.updateCustomers(customerDTO);
+	}
+
+	@DeleteMapping("/customers/{customerId}")
+	public YanResponse deleteCustomers(@PathVariable Long customerId) {
+		return customerServiceI.deleteCustomers(customerId);
+	}
+	
+
+}
+
+
+
+public class CustomerDTO {
+
+	
+    
+    private Long id;
+
+    private String name;
+
+    private GenderEnum genderEnum;
+
+    private String fatherOrHusbandName;
+
+    private String address;
+
+    private String city;
+
+    private String mobileNumber;
+
+    private String pin;
+
+    private String landLineNumber;
+
+    private String state;
+
+    private String email;
+
+    private Long franchiseId;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public GenderEnum getGenderEnum() {
+		return genderEnum;
+	}
+
+	public void setGenderEnum(GenderEnum genderEnum) {
+		this.genderEnum = genderEnum;
+	}
+
+	public String getFatherOrHusbandName() {
+		return fatherOrHusbandName;
+	}
+
+	public void setFatherOrHusbandName(String fatherOrHusbandName) {
+		this.fatherOrHusbandName = fatherOrHusbandName;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
+
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
+	}
+
+	public String getPin() {
+		return pin;
+	}
+
+	public void setPin(String pin) {
+		this.pin = pin;
+	}
+
+	public String getLandLineNumber() {
+		return landLineNumber;
+	}
+
+	public void setLandLineNumber(String landLineNumber) {
+		this.landLineNumber = landLineNumber;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Long getFranchiseId() {
+		return franchiseId;
+	}
+
+	public void setFranchiseId(Long franchiseId) {
+		this.franchiseId = franchiseId;
+	}
+    
+    
+
+
+}
+
+
+
+
+
+public class Customer {
+	
+    @Id
+    private Long id;
+
+    private String name;
+
+    private GenderEnum genderEnum;
+
+    private String fatherOrHusbandName;
+
+    private String address;
+
+    private String city;
+
+    private String mobileNumber;
+
+    private String pin;
+
+    private String landLineNumber;
+
+    private String state;
+
+    @Email
+    private String email;
+
+    private Long franchiseId;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public GenderEnum getGenderEnum() {
+		return genderEnum;
+	}
+
+	public void setGenderEnum(GenderEnum genderEnum) {
+		this.genderEnum = genderEnum;
+	}
+
+	public String getFatherOrHusbandName() {
+		return fatherOrHusbandName;
+	}
+
+	public void setFatherOrHusbandName(String fatherOrHusbandName) {
+		this.fatherOrHusbandName = fatherOrHusbandName;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
+
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
+	}
+
+	public String getPin() {
+		return pin;
+	}
+
+	public void setPin(String pin) {
+		this.pin = pin;
+	}
+
+	public String getLandLineNumber() {
+		return landLineNumber;
+	}
+
+	public void setLandLineNumber(String landLineNumber) {
+		this.landLineNumber = landLineNumber;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Long getFranchiseId() {
+		return franchiseId;
+	}
+
+	public void setFranchiseId(Long franchiseId) {
+		this.franchiseId = franchiseId;
+	}
+    
+    
+
+}
+
+
+
+public interface CustomerRepo extends JpaRepository<Customer, Long> {
+
+}
+
+
+
+public class CustomerServiceImpl implements CustomerServiceI {
+
+	@Autowired
+	CustomerRepo customerRepository;
+	
+	@Autowired
+	Messages messageService;
+	
+	@Override
+	public YanResponse getAllCustomers() {
+		List<Customer> customerList = customerRepository.findAll();
+        YanResponse yanResponse = new YanResponse();
+        if (!StringUtils.isEmpty(customerList) && customerList.size() > 0) {
+            List<CustomerDTO> partsDTOList = getCustomersToDtoMapping(customerList);
+            yanResponse.setMessage(messageService.getMessage("success.message"));
+            yanResponse.setStatus(HttpStatus.OK.value());
+            yanResponse.setPayLoad(partsDTOList);
+            return yanResponse;
+        }
+        yanResponse.setMessage(messageService.getMessage("customer.no"));
+        yanResponse.setStatus(HttpStatus.OK.value());
+        return yanResponse;
+	}
+
+	
+
+	@Override
+	public YanResponse getCustomerById(Long customerId) {
+		 YanResponse yanResponse = new YanResponse();
+	        if (StringUtils.isEmpty(customerId) && customerId > 0) {
+	            Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
+	            if (optionalCustomer.isPresent()) {
+	                List<Customer> customerList = new ArrayList<>();
+	                Customer customer = optionalCustomer.get();
+	                customerList.add(customer);
+	                List<CustomerDTO> customerDTOList = getCustomersToDtoMapping(customerList);
+	                yanResponse.setMessage(messageService.getMessage("success.message"));
+	                yanResponse.setStatus(HttpStatus.OK.value());
+	                yanResponse.setPayLoad(customerDTOList);
+	            } else {
+	                yanResponse.setMessage(messageService.getMessage("customer.no"));
+	                yanResponse.setStatus(HttpStatus.OK.value());
+	            }
+	        }
+	        return yanResponse;
+	}
+
+	@Override
+	public YanResponse saveCustomers(CustomerDTO customerDTO) {
+		YanResponse yanResponse = new YanResponse();
+        if (customerDTO != null) {
+            if (!StringUtils.isEmpty(customerDTO.getId()) && customerDTO.getId() > 0) {
+                return updateCustomers(customerDTO);
+            } else {
+                Customer customer = new Customer();
+                customer = mapDtoToEntity(customerDTO, customer);
+                customerRepository.save(customer);
+                yanResponse.setStatus(HttpStatus.OK.value());
+                yanResponse.setMessage(messageService.getMessage("customer.save"));
+            }
+        } else {
+            yanResponse.setMessage(messageService.getMessage("invalid.data"));
+            yanResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+        }
+        return yanResponse;
+	}
+
+	
+
+	@Override
+	public YanResponse updateCustomers(CustomerDTO customerDTO) {
+		YanResponse yanResponse = new YanResponse();
+        if (customerDTO != null) {
+            if (!StringUtils.isEmpty(customerDTO.getId()) && customerDTO.getId() > 0) {
+                Optional<Customer> optionalCustomer = customerRepository.findById(customerDTO.getId());
+                if (optionalCustomer.isPresent()) {
+                    Customer customer = optionalCustomer.get();
+                    customer = mapDtoToEntity(customerDTO, customer);
+                    customerRepository.save(customer);
+                    yanResponse.setStatus(HttpStatus.OK.value());
+                    yanResponse.setMessage(messageService.getMessage("customer.update"));
+                } else {
+                    yanResponse.setStatus(HttpStatus.NOT_FOUND.value());
+                    yanResponse.setMessage(messageService.getMessage("customer.not.found"));
+                }
+            }
+        } else {
+            yanResponse.setMessage(messageService.getMessage("invalid.data"));
+            yanResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+        }
+        return yanResponse;
+	}
+
+	@Override
+	public YanResponse deleteCustomers(Long customerId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	private List<CustomerDTO> getCustomersToDtoMapping(List<Customer> customerList) {
+		List<CustomerDTO> customerDTOList = new ArrayList<>();
+        for (Customer customer : customerList) {
+            CustomerDTO customerDTO = new CustomerDTO();
+            customerDTO.setId(customer.getId());
+            customerDTO.setName(customer.getName());
+            customerDTO.setGenderEnum(customer.getGenderEnum());
+            customerDTO.setFatherOrHusbandName(customer.getFatherOrHusbandName());
+            customerDTO.setAddress(customer.getAddress());
+            customerDTO.setCity(customer.getCity());
+            customerDTO.setMobileNumber(customer.getMobileNumber());
+            customerDTO.setPin(customer.getPin());
+            customerDTO.setLandLineNumber(customer.getLandLineNumber());
+            customerDTO.setState(customer.getState());
+            customerDTO.setEmail(customer.getEmail());
+            customerDTO.setFranchiseId(customer.getFranchiseId());
+            customerDTOList.add(customerDTO);
+        }
+            return customerDTOList;
+	}
+	
+	private Customer mapDtoToEntity(CustomerDTO customerDTO, Customer customer) {
+		
+	    if (!StringUtils.isEmpty(customerDTO.getId())) {
+            customer.setId(customer.getId());
+        }
+        if (!StringUtils.isEmpty(customerDTO.getName())) {
+            customer.setName(customer.getName());
+        }
+        if (!StringUtils.isEmpty(customerDTO.getGenderEnum())) {
+            customer.setGenderEnum(customer.getGenderEnum());
+        }
+        if (!StringUtils.isEmpty(customerDTO.getFatherOrHusbandName())) {
+            customer.setFatherOrHusbandName(customer.getFatherOrHusbandName());
+        }
+        if (!StringUtils.isEmpty(customerDTO.getAddress())) {
+            customer.setAddress(customer.getAddress());
+        }
+        if (!StringUtils.isEmpty(customerDTO.getCity())) {
+            customer.setCity(customer.getCity());
+        }
+        if (!StringUtils.isEmpty(customerDTO.getMobileNumber())) {
+            customer.setMobileNumber(customer.getMobileNumber());
+        }
+        if (!StringUtils.isEmpty(customerDTO.getPin())) {
+            customer.setPin(customer.getPin());
+        }
+        if (!StringUtils.isEmpty(customerDTO.getLandLineNumber())) {
+            customer.setLandLineNumber(customer.getLandLineNumber());
+        }
+        if (!StringUtils.isEmpty(customerDTO.getState())) {
+            customer.setState(customer.getState());
+        }
+        
+        if (!StringUtils.isEmpty(customerDTO.getEmail())) {
+            customer.setEmail(customer.getEmail());
+        }
+        
+        if (!StringUtils.isEmpty(customerDTO.getFranchiseId())) {
+            customer.setFranchiseId(customer.getFranchiseId());
+        }
+        return customer;
+}
+
+}
+
+
+
+
+
+public interface CustomerServiceI {
+	
+	YanResponse getAllCustomers();
+	
+	YanResponse getCustomerById(Long customerId);
+	
+	YanResponse saveCustomers(CustomerDTO customerDTO);
+	
+	YanResponse updateCustomers(CustomerDTO customerDTO);
+	
+	YanResponse deleteCustomers(Long customerId);
+
+}
