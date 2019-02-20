@@ -6,7 +6,8 @@ import com.vehicle.workshop.utils.YanResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("api")
+@RestController()
+@RequestMapping("api")
 public class UserController {
 
     @Autowired

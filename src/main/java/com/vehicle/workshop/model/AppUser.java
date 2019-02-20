@@ -5,9 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
 @Entity
-public class AppUser {
-
-    private Long id;
+public class AppUser extends BaseEntity {
 
     private String userId;
 
@@ -20,14 +18,6 @@ public class AppUser {
     private Boolean isActive;
 
     private Integer invalidLoginAttempts;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getUserId() {
         return userId;
