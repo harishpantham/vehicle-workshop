@@ -425,42 +425,42 @@ public class CustomerServiceImpl implements CustomerServiceI {
 	private Customer mapDtoToEntity(CustomerDTO customerDTO, Customer customer) {
 		
 	    if (!StringUtils.isEmpty(customerDTO.getId())) {
-            customer.setId(customer.getId());
+            customer.setId(customerDTO.getId());
         }
         if (!StringUtils.isEmpty(customerDTO.getName())) {
-            customer.setName(customer.getName());
+            customer.setName(customerDTO.getName());
         }
         if (!StringUtils.isEmpty(customerDTO.getGenderEnum())) {
-            customer.setGenderEnum(customer.getGenderEnum());
+            customer.setGenderEnum(customerDTO.getGenderEnum());
         }
         if (!StringUtils.isEmpty(customerDTO.getFatherOrHusbandName())) {
-            customer.setFatherOrHusbandName(customer.getFatherOrHusbandName());
+            customer.setFatherOrHusbandName(customerDTO.getFatherOrHusbandName());
         }
         if (!StringUtils.isEmpty(customerDTO.getAddress())) {
-            customer.setAddress(customer.getAddress());
+            customer.setAddress(customerDTO.getAddress());
         }
         if (!StringUtils.isEmpty(customerDTO.getCity())) {
-            customer.setCity(customer.getCity());
+            customer.setCity(customerDTO.getCity());
         }
         if (!StringUtils.isEmpty(customerDTO.getMobileNumber())) {
-            customer.setMobileNumber(customer.getMobileNumber());
+            customer.setMobileNumber(customerDTO.getMobileNumber());
         }
         if (!StringUtils.isEmpty(customerDTO.getPin())) {
-            customer.setPin(customer.getPin());
+            customer.setPin(customerDTO.getPin());
         }
         if (!StringUtils.isEmpty(customerDTO.getLandLineNumber())) {
-            customer.setLandLineNumber(customer.getLandLineNumber());
+            customer.setLandLineNumber(customerDTO.getLandLineNumber());
         }
         if (!StringUtils.isEmpty(customerDTO.getState())) {
-            customer.setState(customer.getState());
+            customer.setState(customerDTO.getState());
         }
         
         if (!StringUtils.isEmpty(customerDTO.getEmail())) {
-            customer.setEmail(customer.getEmail());
+            customer.setEmail(customerDTO.getEmail());
         }
         
         if (!StringUtils.isEmpty(customerDTO.getFranchiseId())) {
-            customer.setFranchiseId(customer.getFranchiseId());
+            customer.setFranchiseId(customerDTO.getFranchiseId());
         }
         return customer;
 }
